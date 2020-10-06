@@ -1,3 +1,4 @@
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
@@ -5,7 +6,7 @@ import time
 
 
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
 
@@ -20,7 +21,8 @@ class NewVisitorTest(unittest.TestCase):
 
 
     def test_can_start_alist_and_retreive_list(self):
-        self.browser.get('http://localhost:8000/')
+        self.browser.get(self.live_server_url)
+        # self.live_server_url is equavalent to 'http://localhost:8000'
         self.assertIn('To-Do', self.browser.title)
         header_text = self.browser.find_element_by_tag_name('h1').text
         self.assertIn('To-Do', header_text)
@@ -45,7 +47,3 @@ class NewVisitorTest(unittest.TestCase):
         self.check_for_row_in_table('2: Use peacock feathers to make a fly')
 
         self.fail('Finish the test!')
-      
-
-if __name__ == '__main__':
-    unittest.main(warnings='ignore')
