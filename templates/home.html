@@ -10,9 +10,11 @@
    <form method='POST'>
         {%csrf_token%}
          <input  name='item_text' type="text" placeholder="Enter a to-do item" id='id_new_item'>
-    </form>S
-    <table id = 'id_list_tabel'> 
-        <tr><td> {{new_item_text}} </td></tr>
+    </form>
+    <table id = 'id_list_table'> 
+        {% for item in items %}
+            <tr><td>{{forloop.counter}}: {{item.text}} </td></tr>
+        {% endfor %}
     </table>
 </body>
 </html>
